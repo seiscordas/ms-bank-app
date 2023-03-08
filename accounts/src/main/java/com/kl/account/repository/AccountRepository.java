@@ -1,9 +1,9 @@
-package com.kl.accounts.repository;
+package com.kl.account.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.kl.accounts.model.Account;
+import com.kl.account.model.Account;
 
 @Repository
 public interface AccountRepository extends CrudRepository<Account, Long> {

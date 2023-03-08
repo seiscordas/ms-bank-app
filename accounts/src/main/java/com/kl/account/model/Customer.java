@@ -1,4 +1,4 @@
-package com.kl.accounts.model;
+package com.kl.account.model;
 
 import java.io.Serial;
 import java.io.Serializable;

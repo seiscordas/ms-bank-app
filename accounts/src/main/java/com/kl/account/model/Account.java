@@ -1,10 +1,9 @@
-package com.kl.accounts.model;
+package com.kl.account.model;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
