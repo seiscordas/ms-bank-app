@@ -26,5 +26,4 @@ public class Loan implements Serializable {
 	private int amountPaid;
 	private int outstandingAmount;
 	private String createDt;
-	
 }

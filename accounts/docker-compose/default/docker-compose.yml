@@ -1,0 +1,84 @@
+version: "3.8"
+
+services:
+
+  configserver:
+    image: ms-bank-app/configserver:0.0.1
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 500M
+    ports:
+      - "8071:8071"
+    networks:
+     - ms-bank-app-network
+      
+  account:
+    image: ms-bank-app/account:0.0.2
+    ports:
+      - "8080:8080"
+    networks:
+      - ms-bank-app-network
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 500M
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+  
+  loan:
+    image: ms-bank-app/loan:0.0.2
+    ports:
+      - "8090:8090"
+    networks:
+      - ms-bank-app-network
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 500M
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+    
+  card:
+    image: ms-bank-app/card:0.0.2
+    ports:
+      - "9000:9000"
+    networks:
+      - ms-bank-app-network
+    depends_on:
+      - configserver
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      resources:
+        limits:
+          cpus: '0.50'
+          memory: 500M
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
+      
+networks:
+  ms-bank-app-network:
