@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.kl</groupId>
 	<artifactId>configserver</artifactId>
-	<version>0.0.1</version>
+	<version>latest</version>
 	<name>configserver</name>
 	<description>Configuration Server for Bank Microservices</description>
 	<properties>

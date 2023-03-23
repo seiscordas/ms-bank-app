@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.kl</groupId>
     <artifactId>account</artifactId>
-    <version>0.0.2</version>
+    <version>latest</version>
     <name>account</name>
     <description>Microservice for Accounts</description>
     <properties>
