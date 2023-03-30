@@ -3,28 +3,28 @@ version: "3.8"
 services:
 
   configserver:
-    image: ms-bank-app/configserver:0.0.1
+    image: klebermart/configserver:latest
     ports:
       - "8071:8071"
     networks:
       - ms-bank-app-network
 
   account:
-    image: ms-bank-app/account:0.0.2
+    image: klebermart/account:latest
     ports:
       - "8080:8080"
     networks:
       - ms-bank-app-network
     
   loan:
-    image: ms-bank-app/loan:0.0.2
+    image: klebermart/loan:latest
     ports:
       - "8090:8090"
     networks:
       - ms-bank-app-network
     
   card:
-    image: ms-bank-app/card:0.0.2
+    image: klebermart/card:latest
     ports:
       - "9000:9000"
     networks:

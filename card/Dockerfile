@@ -1,8 +1,8 @@
 FROM openjdk:17-alpine
-RUN mkdir ms-bank-app
+RUN mkdir klebermart
 ARG JAR_FILE
-ADD /target/${JAR_FILE} /ms-bank-app/card.jar
-WORKDIR /ms-bank-app
+ADD /target/${JAR_FILE} /klebermart/card.jar
+WORKDIR /klebermart
 
 ENV PORT 9000 5003
 EXPOSE 9000 5003
