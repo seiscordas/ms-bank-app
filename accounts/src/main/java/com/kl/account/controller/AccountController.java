@@ -7,6 +7,9 @@ import com.kl.account.config.AccountServiceConfig;
 import com.kl.account.model.*;
 import com.kl.account.service.client.ICardFeignClient;
 import com.kl.account.service.client.ILoanFeignClient;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,6 +54,8 @@ public class AccountController {
 	}
 
 	@PostMapping("/myCustomerDetails")
+	//@CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod = "myCustomerDetailsFallBack")
+	@Retry(name = "retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallBack")
 	public CustomerDetails myCustomerDetails(@RequestBody Customer customer) {
 		Account accounts = accountRepository.findByCustomerId(customer.getCustomerId());
 		List<Loan> loans = loansFeignClient.getLoansDetails(customer);
@@ -62,6 +67,26 @@ public class AccountController {
 		customerDetails.setCards(cards);
 
 		return customerDetails;
+	}
+
+	private CustomerDetails myCustomerDetailsFallBack(Customer customer, Throwable t) {
+		Account accounts = accountRepository.findByCustomerId(customer.getCustomerId());
+		List<Loan> loans = loansFeignClient.getLoansDetails(customer);
+		CustomerDetails customerDetails = new CustomerDetails();
+		customerDetails.setAccounts(accounts);
+		customerDetails.setLoans(loans);
+		return customerDetails;
+
+	}
+
+	@GetMapping("/sayHello")
+	@RateLimiter(name = "sayHello", fallbackMethod = "sayHelloFallback")
+	public String sayHello() {
+		return "Hello, Welcome to KL Systems";
+	}
+
+	private String sayHelloFallback(Throwable t) {
+		return "Hi, Welcome to KL Systems";
 	}
 
 
