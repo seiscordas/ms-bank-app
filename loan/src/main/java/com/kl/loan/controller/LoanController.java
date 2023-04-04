@@ -12,10 +12,7 @@ import com.kl.loan.model.Loan;
 import com.kl.loan.model.Properties;
 import com.kl.loan.repository.LoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,7 +31,7 @@ public class LoanController {
 	LoanServiceConfig loanServiceConfig;
 
 	@PostMapping("/myLoans")
-	public List<Loan> getLoanDetails(@RequestBody Customer customer) {
+	public List<Loan> getLoanDetails(@RequestHeader("kl-correlation-id") String correlationId, @RequestBody Customer customer) {
 		return loanRepository.findByCustomerIdOrderByStartDtDesc(customer.getCustomerId());
 	}
 

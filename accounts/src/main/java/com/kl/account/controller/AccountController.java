@@ -7,14 +7,10 @@ import com.kl.account.config.AccountServiceConfig;
 import com.kl.account.model.*;
 import com.kl.account.service.client.ICardFeignClient;
 import com.kl.account.service.client.ILoanFeignClient;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.kl.account.repository.AccountRepository;
 
@@ -56,10 +52,10 @@ public class AccountController {
 	@PostMapping("/myCustomerDetails")
 	//@CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod = "myCustomerDetailsFallBack")
 	@Retry(name = "retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallBack")
-	public CustomerDetails myCustomerDetails(@RequestBody Customer customer) {
+	public CustomerDetails myCustomerDetails(@RequestHeader("kl-correlation-id") String correlationId, @RequestBody Customer customer) {
 		Account accounts = accountRepository.findByCustomerId(customer.getCustomerId());
-		List<Loan> loans = loansFeignClient.getLoansDetails(customer);
-		List<Card> cards = cardsFeignClient.getCardDetails(customer);
+		List<Loan> loans = loansFeignClient.getLoansDetails(correlationId, customer);
+		List<Card> cards = cardsFeignClient.getCardDetails(correlationId, customer);
 
 		CustomerDetails customerDetails = new CustomerDetails();
 		customerDetails.setAccounts(accounts);
@@ -69,14 +65,13 @@ public class AccountController {
 		return customerDetails;
 	}
 
-	private CustomerDetails myCustomerDetailsFallBack(Customer customer, Throwable t) {
+	private CustomerDetails myCustomerDetailsFallBack(@RequestHeader("kl-correlation-id") String correlationId, Customer customer, Throwable t) {
 		Account accounts = accountRepository.findByCustomerId(customer.getCustomerId());
-		List<Loan> loans = loansFeignClient.getLoansDetails(customer);
+		List<Loan> loans = loansFeignClient.getLoansDetails(correlationId, customer);
 		CustomerDetails customerDetails = new CustomerDetails();
 		customerDetails.setAccounts(accounts);
 		customerDetails.setLoans(loans);
 		return customerDetails;
-
 	}
 
 	@GetMapping("/sayHello")
@@ -88,7 +83,5 @@ public class AccountController {
 	private String sayHelloFallback(Throwable t) {
 		return "Hi, Welcome to KL Systems";
 	}
-
-
 }
 
