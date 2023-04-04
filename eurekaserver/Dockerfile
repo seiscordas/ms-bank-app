@@ -4,7 +4,7 @@ ARG JAR_FILE
 ADD /target/${JAR_FILE} /klebermart/eurekaserver.jar
 WORKDIR /klebermart
 
-ENV PORT 8070 5006
-EXPOSE 8070 5006
+ENV PORT 8070 5002
+EXPOSE 8070 5002
 
-ENTRYPOINT ["java","-agentlib:jdwp=transport=dt_socket,address=5006,server=y,suspend=n","-Djava.security.egd=file:/dev/./urandom","-Xms2g","-Xmx8g","-jar","eurekaserver.jar"]
+ENTRYPOINT ["java","-agentlib:jdwp=transport=dt_socket,address=5002,server=y,suspend=n","-Djava.security.egd=file:/dev/./urandom","-Xms2g","-Xmx8g","-jar","eurekaserver.jar"]

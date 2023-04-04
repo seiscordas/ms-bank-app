@@ -4,7 +4,7 @@ ARG JAR_FILE
 ADD /target/${JAR_FILE} /klebermart/loan.jar
 WORKDIR /klebermart
 
-ENV PORT 8090 5002
-EXPOSE 8090 5002
+ENV PORT 8090 5005
+EXPOSE 8090 5005
 
-ENTRYPOINT ["java","-agentlib:jdwp=transport=dt_socket,address=5002,server=y,suspend=n","-Djava.security.egd=file:/dev/./urandom","-Xms2g","-Xmx8g","-jar","loan.jar"]
+ENTRYPOINT ["java","-agentlib:jdwp=transport=dt_socket,address=5005,server=y,suspend=n","-Djava.security.egd=file:/dev/./urandom","-Xms2g","-Xmx8g","-jar","loan.jar"]

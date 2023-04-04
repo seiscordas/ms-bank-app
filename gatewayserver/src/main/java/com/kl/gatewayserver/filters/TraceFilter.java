@@ -25,22 +25,18 @@ public class  TraceFilter implements GlobalFilter {
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
 		if (isCorrelationIdPresent(requestHeaders)) {
-			logger.debug("EazyBank-correlation-id found in tracing filter: {}. ",
+			logger.debug("kl-correlation-id found in tracing filter: {}. ",
 					filterUtility.getCorrelationId(requestHeaders));
 		} else {
 			String correlationID = generateCorrelationId();
 			exchange = filterUtility.setCorrelationId(exchange, correlationID);
-			logger.debug("EazyBank-correlation-id generated in tracing filter: {}.", correlationID);
+			logger.debug("kl-correlation-id generated in tracing filter: {}.", correlationID);
 		}
 		return chain.filter(exchange);
 	}
 
 	private boolean isCorrelationIdPresent(HttpHeaders requestHeaders) {
-		if (filterUtility.getCorrelationId(requestHeaders) != null) {
-			return true;
-		} else {
-			return false;
-		}
+		return filterUtility.getCorrelationId(requestHeaders) != null;
 	}
 
 	private String generateCorrelationId() {
