@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.kl.account.config.AccountServiceConfig;
 import com.kl.account.model.*;
+import com.kl.account.repository.AccountRepository;
 import com.kl.account.service.client.ICardFeignClient;
 import com.kl.account.service.client.ILoanFeignClient;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 import io.micrometer.core.annotation.Timed;
@@ -17,8 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import com.kl.account.repository.AccountRepository;
 
 import java.util.List;
 
@@ -67,6 +65,8 @@ public class AccountController {
     //@CircuitBreaker(name = "detailsForCustomerSupportApp", fallbackMethod = "myCustomerDetailsFallBack")
     @Retry(name = "retryForCustomerDetails", fallbackMethod = "myCustomerDetailsFallBack")
     public CustomerDetails myCustomerDetails(@RequestHeader("kl-correlation-id") String correlationId, @RequestBody Customer customer) {
+        log.info("myCustomerDetails correlationId: {} customer: {}", correlationId, customer);
+
         Account accounts = accountRepository.findByCustomerId(customer.getCustomerId());
         List<Loan> loans = loansFeignClient.getLoansDetails(correlationId, customer);
         List<Card> cards = cardsFeignClient.getCardDetails(correlationId, customer);
