@@ -1,0 +1,25 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+deploymentName: gatewayserver-deployment
+deploymentLabel: gatewayserver
+
+replicaCount: 1
+
+image:
+  repository: klebermart/gatewayserver
+  tag: latest
+
+containerPort: 9090
+
+service:
+  type: LoadBalancer
+  port: 9090
+
+  targetPort: 9090
+
+
+config_enabled: true
+zipkin_enabled: true
+profile_enabled: true
+eureka_enabled: true

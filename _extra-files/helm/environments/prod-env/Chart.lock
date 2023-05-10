@@ -1,0 +1,27 @@
+dependencies:
+- name: klbank-common
+  repository: file://../../klbank-common
+  version: 0.1.0
+- name: zipkin
+  repository: file://../../klbank-services/zipkin
+  version: 0.1.0
+- name: configserver
+  repository: file://../../klbank-services/configserver
+  version: 0.1.0
+- name: eurekaserver
+  repository: file://../../klbank-services/eurekaserver
+  version: 0.1.0
+- name: account
+  repository: file://../../klbank-services/account
+  version: 0.1.0
+- name: card
+  repository: file://../../klbank-services/card
+  version: 0.1.0
+- name: loan
+  repository: file://../../klbank-services/loan
+  version: 0.1.0
+- name: gatewayserver
+  repository: file://../../klbank-services/gatewayserver
+  version: 0.1.0
+digest: sha256:dab0c9b31eafa2e57cc8afec2e0620f8d806d8ac9353b895c7a3c3750c2a43d5
+generated: "2023-05-10T09:02:34.9322612-03:00"

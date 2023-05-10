@@ -1,0 +1,23 @@
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+deploymentName: account-deployment
+deploymentLabel: account
+
+replicaCount: 1
+
+image:
+  repository: klebermart/account
+  tag: latest
+
+containerPort: 8080
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+config_enabled: true
+zipkin_enabled: true
+profile_enabled: true
+eureka_enabled: true

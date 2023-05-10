@@ -1,0 +1,6 @@
+dependencies:
+- name: klbank-common
+  repository: file://../../klbank-common
+  version: 0.1.0
+digest: sha256:2c1696783d2f0f7a99a17062809c1cd16ae4df87d4067b34fb3eac7b905f14e6
+generated: "2023-05-09T17:46:06.2155315-03:00"
