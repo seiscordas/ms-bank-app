@@ -4,7 +4,7 @@
 deploymentName: account-deployment
 deploymentLabel: account
 
-replicaCount: 1
+replicaCount: 2
 
 image:
   repository: klebermart/account
@@ -21,3 +21,4 @@ config_enabled: true
 zipkin_enabled: true
 profile_enabled: true
 eureka_enabled: true
+keycloak_enabled: false

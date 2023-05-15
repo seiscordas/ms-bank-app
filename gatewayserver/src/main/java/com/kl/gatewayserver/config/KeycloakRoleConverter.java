@@ -24,6 +24,5 @@ public class KeycloakRoleConverter implements Converter<Jwt, Collection<GrantedA
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
         return returnValue;
-
     }
 }

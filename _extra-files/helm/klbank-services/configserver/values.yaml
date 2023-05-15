@@ -20,3 +20,4 @@ config_enabled: false
 zipkin_enabled: true
 profile_enabled: true
 eureka_enabled: false
+keycloak_enabled: false

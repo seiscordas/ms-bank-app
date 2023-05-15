@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author KL Systems
@@ -97,7 +98,8 @@ public class AccountController {
     @GetMapping("/sayHello")
     @RateLimiter(name = "sayHello", fallbackMethod = "sayHelloFallback")
     public String sayHello() {
-        return "Hello, Welcome to KL Systems";
+        Optional<String> podName = Optional.ofNullable(System.getenv("HOSTNAME"));
+        return "Hello, Welcome to KL Systems Kubernetes cluster from: " + podName.orElseThrow();
     }
 
     private String sayHelloFallback(Throwable t) {

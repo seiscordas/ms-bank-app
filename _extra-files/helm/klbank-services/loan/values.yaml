@@ -13,7 +13,7 @@ image:
 containerPort: 8090
 
 service:
-  type: 
+  type: ClusterIP
   port: 8090
   targetPort: 8090
 
@@ -21,3 +21,4 @@ config_enabled: true
 zipkin_enabled: true
 profile_enabled: true
 eureka_enabled: true
+keycloak_enabled: false
